@@ -28,4 +28,6 @@ public class PacienteService {
         repository.saveAndFlush(paciente);
     }
 
+
+    //criar método excluir
 }
