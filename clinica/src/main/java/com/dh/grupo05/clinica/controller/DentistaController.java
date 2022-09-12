@@ -1,6 +1,7 @@
 package com.dh.grupo05.clinica.controller;
 
 import com.dh.grupo05.clinica.model.Dentista;
+import com.dh.grupo05.clinica.model.dto.DentistaDTO;
 import com.dh.grupo05.clinica.service.DentistaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,13 @@ public class DentistaController {
     @RequestMapping(value = "/buscaId", method = RequestMethod.GET)
     public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
-
         Optional<Dentista> dentistaOptional = service.buscaPorId(id);
         if (dentistaOptional.isEmpty()) {
             return new ResponseEntity("Dentista não encontrado", HttpStatus.NOT_FOUND);
         }
         Dentista dentista = dentistaOptional.get();
-        //DentistaDTO dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
-
-        return new ResponseEntity(dentista, HttpStatus.OK);
+        DentistaDTO dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
+        return new ResponseEntity(dentistaDTO, HttpStatus.OK);
     }
 
     @PatchMapping
