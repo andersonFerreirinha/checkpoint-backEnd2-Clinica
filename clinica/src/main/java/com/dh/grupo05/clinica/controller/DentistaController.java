@@ -21,8 +21,9 @@ public class DentistaController {
     DentistaService service;
 
     @PostMapping
-    public Dentista salvarDentista(@RequestBody Dentista dentista) {
-        return service.salvar(dentista);
+    public ResponseEntity salvarDentista(@RequestBody Dentista dentista) {
+        Dentista salvarDentista = service.salvar(dentista);
+        return new ResponseEntity(salvarDentista, HttpStatus.OK);
     }
 
     @GetMapping
@@ -40,8 +41,6 @@ public class DentistaController {
         Dentista dentista = dentistaOptional.get();
         DentistaDTO dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
         return new ResponseEntity(dentistaDTO, HttpStatus.OK);
-
-
     }
 
     @PatchMapping

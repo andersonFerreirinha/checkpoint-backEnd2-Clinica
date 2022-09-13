@@ -25,8 +25,9 @@ public class Paciente {
     @Column(name= "sobrenome")
     private String sobrenome;
 
-    @Column(name= "idEndereco")
-    private Long idEndereco;
+    @OneToOne
+    @JoinColumn(name = "idEndereco")
+    private Endereco endereco;
 
     @Column(name= "rg")
     private String rg;

@@ -21,8 +21,9 @@ public class PacienteController {
     PacienteService service;
 
     @PostMapping
-    public Paciente salvarPaciente(@RequestBody Paciente paciente) {
-        return service.salvar(paciente);
+    public ResponseEntity salvarPaciente(@RequestBody Paciente paciente) {
+        Paciente salvarPaciente = service.salvar(paciente);
+        return new ResponseEntity( salvarPaciente, HttpStatus.OK);
     }
 
     @GetMapping

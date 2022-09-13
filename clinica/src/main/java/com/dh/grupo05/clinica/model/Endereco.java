@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private Long Id;
 
     @Column(name = "rua")
     private String rua;
