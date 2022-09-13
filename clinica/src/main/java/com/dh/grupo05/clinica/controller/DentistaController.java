@@ -22,8 +22,7 @@ public class DentistaController {
 
     @PostMapping
     public ResponseEntity salvarDentista(@RequestBody Dentista dentista) {
-        Dentista salvarDentista = service.salvar(dentista);
-        return new ResponseEntity(salvarDentista, HttpStatus.OK);
+        return new ResponseEntity(service.salvar(dentista), HttpStatus.OK);
     }
 
     @GetMapping

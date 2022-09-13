@@ -26,7 +26,7 @@ public class Paciente {
     private String sobrenome;
 
     @OneToOne
-    @JoinColumn(name = "idEndereco")
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
     @Column(name= "rg")
