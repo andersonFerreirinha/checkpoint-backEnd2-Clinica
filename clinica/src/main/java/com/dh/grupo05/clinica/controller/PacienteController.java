@@ -1,6 +1,7 @@
 package com.dh.grupo05.clinica.controller;
 
 import com.dh.grupo05.clinica.model.Paciente;
+import com.dh.grupo05.clinica.model.dto.PacienteDTO;
 import com.dh.grupo05.clinica.service.PacienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,20 @@ public class PacienteController {
     }
 
     @GetMapping
-    public List<Paciente> buscarTodosPacientes() {
+    public List<PacienteDTO> buscarTodosPacientes() {
         return service.buscarTodosPacientes();
     }
 
     @RequestMapping(value = "/buscaId", method = RequestMethod.GET)
     public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
-
         Optional<Paciente> pacienteOptional = service.buscaPorId(id);
         if(pacienteOptional.isEmpty()) {
             return new ResponseEntity("Paciente não encontrado", HttpStatus.NOT_FOUND);
         }
         Paciente paciente = pacienteOptional.get();
-
-        return new ResponseEntity(paciente,HttpStatus.OK);
+        PacienteDTO pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
+        return new ResponseEntity(pacienteDTO,HttpStatus.OK);
     }
 
     @PatchMapping

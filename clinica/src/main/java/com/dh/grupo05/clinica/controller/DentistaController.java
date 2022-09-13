@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/dentista")
+
 public class DentistaController {
     @Autowired
     DentistaService service;
@@ -25,7 +26,7 @@ public class DentistaController {
     }
 
     @GetMapping
-    public List<Dentista> buscarTodosDentistas() {
+    public List<DentistaDTO> buscarTodosDentistas() {
         return service.buscarTodosDentistas();
     }
 
@@ -33,12 +34,14 @@ public class DentistaController {
     public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
         Optional<Dentista> dentistaOptional = service.buscaPorId(id);
-        if (dentistaOptional.isEmpty()) {
+        if(dentistaOptional.isEmpty()) {
             return new ResponseEntity("Dentista não encontrado", HttpStatus.NOT_FOUND);
         }
         Dentista dentista = dentistaOptional.get();
         DentistaDTO dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
         return new ResponseEntity(dentistaDTO, HttpStatus.OK);
+
+
     }
 
     @PatchMapping
