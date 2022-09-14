@@ -12,10 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+//Dados senciveis foram retirados
 public class PacienteDTO {
     private String nome;
     private String sobrenome;
-    private String rg;
     private Endereco endereco;
 
 }

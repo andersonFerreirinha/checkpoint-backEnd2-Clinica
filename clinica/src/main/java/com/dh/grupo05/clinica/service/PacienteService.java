@@ -38,6 +38,8 @@ public class PacienteService {
         repository.saveAndFlush(paciente);
     }
 
+    public void excluir(Long id){
+        repository.deleteById(id);
+    }
 
-    //criar método excluir
 }

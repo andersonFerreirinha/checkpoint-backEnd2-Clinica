@@ -48,5 +48,10 @@ public class PacienteController {
         service.modificar(paciente);
     }
 
+    @DeleteMapping
+    public void excluir(@RequestParam("id") Long id) throws SQLException{
+        service.excluir(id);
+    }
+
 
 }
