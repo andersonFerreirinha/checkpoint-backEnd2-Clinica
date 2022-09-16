@@ -1,5 +1,6 @@
 package com.dh.grupo05.clinica.controller;
 
+import com.dh.grupo05.clinica.exception.ResourceNotFoundException;
 import com.dh.grupo05.clinica.model.Paciente;
 import com.dh.grupo05.clinica.model.dto.PacienteDTO;
 import com.dh.grupo05.clinica.service.PacienteService;
@@ -23,7 +24,7 @@ public class PacienteController {
     @PostMapping
     public ResponseEntity salvarPaciente(@RequestBody Paciente paciente) {
         Paciente salvarPaciente = service.salvar(paciente);
-        return new ResponseEntity( salvarPaciente, HttpStatus.OK);
+        return new ResponseEntity(salvarPaciente, HttpStatus.OK);
     }
 
     @GetMapping
@@ -32,15 +33,8 @@ public class PacienteController {
     }
 
     @RequestMapping(value = "/buscaId", method = RequestMethod.GET)
-    public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws SQLException {
-        ObjectMapper mapper = new ObjectMapper();
-        Optional<Paciente> pacienteOptional = service.buscaPorId(id);
-        if(pacienteOptional.isEmpty()) {
-            return new ResponseEntity("Paciente não encontrado", HttpStatus.NOT_FOUND);
-        }
-        Paciente paciente = pacienteOptional.get();
-        PacienteDTO pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
-        return new ResponseEntity(pacienteDTO,HttpStatus.OK);
+    public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws ResourceNotFoundException {
+        return new ResponseEntity(service.buscaPorId(id), HttpStatus.OK);
     }
 
     @PatchMapping
@@ -49,7 +43,7 @@ public class PacienteController {
     }
 
     @DeleteMapping
-    public void excluir(@RequestParam("id") Long id) throws SQLException{
+    public void excluir(@RequestParam("id") Long id) throws ResourceNotFoundException {
         service.excluir(id);
     }
 

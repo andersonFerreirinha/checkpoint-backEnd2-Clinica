@@ -27,11 +27,13 @@ public class Consulta {
     @Column(name= "dataConsulta")
     private Date dataConsulta;
 
-    @Column(name= "nomeDentista")
-    private int nomeDentista;
+    @ManyToOne
+    @JoinColumn(name= "nomeDentista")
+    private Dentista dentista;
 
-    @Column(name= "nomePaciente")
-    private int nomePaciente;
+    @ManyToOne
+    @JoinColumn(name= "nomePaciente")
+    private Paciente paciente;
 
 
 }
