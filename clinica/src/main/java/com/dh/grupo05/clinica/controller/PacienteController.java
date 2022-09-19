@@ -28,8 +28,13 @@ public class PacienteController {
     }
 
     @GetMapping
-    public List<PacienteDTO> buscarTodosPacientes() {
-        return service.buscarTodosPacientes();
+    public ResponseEntity buscarTodosPacientes() {
+        List<PacienteDTO> pacienteDTOList = service.buscarTodosPacientes();
+        if(pacienteDTOList.isEmpty()){
+            return new ResponseEntity("Nenhum paciente encontrado", HttpStatus.NOT_FOUND);
+
+        }
+        return new ResponseEntity(pacienteDTOList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/buscaId", method = RequestMethod.GET)

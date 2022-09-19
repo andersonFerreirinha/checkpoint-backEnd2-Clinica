@@ -50,7 +50,8 @@ public class PacienteService {
     }
 
     public void excluir(Long id) throws ResourceNotFoundException {
-        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Erro ao tentar excluir paciente, o paciente informado não existe"));
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
+                "Erro ao tentar excluir paciente, o paciente informado não existe"));
         repository.deleteById(id);
     }
 

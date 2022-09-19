@@ -1,5 +1,6 @@
 package com.dh.grupo05.clinica.service;
 
+import com.dh.grupo05.clinica.exception.ResourceNotFoundException;
 import com.dh.grupo05.clinica.model.Dentista;
 import com.dh.grupo05.clinica.model.dto.DentistaDTO;
 import com.dh.grupo05.clinica.repository.DentistaRepository;
@@ -30,8 +31,17 @@ public class DentistaService {
         return listDentistaDTO;
     }
 
-    public Optional<Dentista> buscaPorId(Long id) {
-        return repository.findById(id);
+    public DentistaDTO buscaPorId(Long id) throws ResourceNotFoundException {
+        ObjectMapper mapper = new ObjectMapper();
+        Optional<Dentista> dentistaOptional = repository.findById(id);
+        DentistaDTO dentistaDTO = null;
+        try{
+            Dentista dentista = dentistaOptional.get();
+            dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException("Erro ao buscar dentista, este dentista não existe");
+        }
+        return dentistaDTO;
     }
 
     public void modificar(Dentista dentista) {

@@ -24,14 +24,17 @@ public class EnderecoController {
     }
 
     @GetMapping
-    public List<Endereco> buscarTodosEnderecos() throws SQLException {
-        return service.buscarTodosEndercos();
+    public ResponseEntity buscarTodosEnderecos() throws SQLException {
+        List<Endereco> enderecoList = service.buscarTodosEndercos();
+        if(enderecoList.isEmpty()){
+            return new ResponseEntity("Nenhum endereço encontrado", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(enderecoList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/buscaId",  method = RequestMethod.GET)
     public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws SQLException{
         ObjectMapper mapper = new ObjectMapper();
-
         Optional<Endereco> enderecoOptional = service.buscaPorId(id);
         if (enderecoOptional.isEmpty()) {
             return new ResponseEntity("Endereço não encontrado", HttpStatus.NOT_FOUND);
