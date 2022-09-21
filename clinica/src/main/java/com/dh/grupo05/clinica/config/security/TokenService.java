@@ -19,7 +19,7 @@ public class TokenService {
     private String secret;
 
     public String gerarToken(Authentication authentication){
-        Usuario usuario usuarioLogado = (Usuario) authentication.getPrincipal();
+        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
 
         Date dataHoje = new Date();
         Date dataExpiracao = new Date(dataHoje.getTime() + Long.parseLong(expiration));
