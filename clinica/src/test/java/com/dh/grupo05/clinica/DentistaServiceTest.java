@@ -2,22 +2,14 @@ package com.dh.grupo05.clinica;
 
 import com.dh.grupo05.clinica.exception.ResourceNotFoundException;
 import com.dh.grupo05.clinica.model.Dentista;
-import com.dh.grupo05.clinica.model.dto.DentistaDTO;
 import com.dh.grupo05.clinica.service.DentistaService;
-import org.h2.command.dml.Delete;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
-import java.beans.BeanProperty;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Transactional
@@ -26,26 +18,26 @@ public class DentistaServiceTest {
     @Autowired
     DentistaService service;
 
-    static Dentista dentista;
-    static Dentista dentista2;
-    static Dentista dentista3;
+    static Dentista dentistaMolde1;
+    static Dentista dentistaMolde2;
+    static Dentista dentistaMolde3;
 
     @BeforeAll
     static void doBefore(){
-        dentista = new Dentista();
-        dentista.setNome("Paulo");
-        dentista.setSobrenome("Ferracini");
-        dentista.setMatricula("54165161");
+        dentistaMolde1 = new Dentista();
+        dentistaMolde1.setNome("Paulo");
+        dentistaMolde1.setSobrenome("Ferracini");
+        dentistaMolde1.setMatricula("54165161");
 
-        dentista2 = new Dentista();
-        dentista2.setNome("José");
-        dentista2.setSobrenome("Silvério");
-        dentista2.setMatricula("8674513");
+        dentistaMolde2 = new Dentista();
+        dentistaMolde2.setNome("José");
+        dentistaMolde2.setSobrenome("Silvério");
+        dentistaMolde2.setMatricula("8674513");
 
-        dentista3 = new Dentista();
-        dentista3.setNome("Ana");
-        dentista3.setSobrenome("Fidalga");
-        dentista3.setMatricula("5465456");
+        dentistaMolde3 = new Dentista();
+        dentistaMolde3.setNome("Ana");
+        dentistaMolde3.setSobrenome("Fidalga");
+        dentistaMolde3.setMatricula("5465456");
 
 
     }
@@ -53,29 +45,29 @@ public class DentistaServiceTest {
     @Test
     void conluindoSalvamento(){
         Dentista dentista1 = new Dentista();
-        dentista1 = service.salvar(dentista);
+        dentista1 = service.salvar(dentistaMolde1);
 
-        Assertions.assertNotNull(dentista.getId());
-        System.out.println("Dentista1 foi salvo com sucesso");
+        Assertions.assertNotNull(dentista1.getId(), "Dentista1 foi salvo com sucesso");
+
     }
 
     @Test
     void buscarTodos(){
         Dentista dentista1 = new Dentista();
-        dentista1 = service.salvar(dentista);
+        dentista1 = service.salvar(dentistaMolde1);
 
         Dentista dentista3 = new Dentista();
-        dentista3 = service.salvar(dentista2);
+        dentista3 = service.salvar(dentistaMolde2);
 
         int tamanhoLista = service.buscarTodosDentistas().size();
 
-        Assertions.assertEquals(2, tamanhoLista);
-        System.out.println("O tamanho do Array é compatível ao esperado");
-        }
+        Assertions.assertEquals(2, tamanhoLista, "O tamanho do Array é compatível ao esperado");
+
+    }
     @Test
     void buscarPorId() throws ResourceNotFoundException {
         Dentista dentista4 = new Dentista();
-        dentista4 = service.salvar(dentista3);
+        dentista4 = service.salvar(dentistaMolde3);
 
         Long idDentista4 = dentista4.getId();
         String nomeDentistaBuscado = service.buscaPorId(idDentista4).getNome();
@@ -83,20 +75,20 @@ public class DentistaServiceTest {
         System.out.println("O número do Id do dentista adicionado é: "+ idDentista4);
         System.out.println("O nome do dentista adicionado é: "+ nomeDentistaBuscado);
 
-        Assertions.assertEquals("Ana", nomeDentistaBuscado);
+        Assertions.assertEquals("Ana", nomeDentistaBuscado,"O nome do dentista buscado é compatível ao esperado");
     }
 
     @Test
     void modificar() {
         Dentista dentista5 = new Dentista();
-        dentista5 = service.salvar(dentista);
+        dentista5 = service.salvar(dentistaMolde1);
         System.out.println("O nome do dentista adicionado é: "+ dentista5.getNome());
 
-        Assertions.assertEquals("Paulo", dentista5.getNome());
+        Assertions.assertEquals("Paulo", dentista5.getNome(), "O nome do dentista buscado é compatível ao esperado");
         dentista5.setNome("Cher");
         service.modificar(dentista5);
 
         System.out.println("O novo nome do dentista adicionado é: "+ dentista5.getNome());
-        Assertions.assertEquals("Cher", dentista5.getNome());
+        Assertions.assertEquals("Cher", dentista5.getNome(), "O nome do dentista buscado é compatível ao esperado");
     }
 }
