@@ -13,8 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -117,10 +116,12 @@ public class PacienteServiceTest {
 
         service.excluir(paciente7.getId());
 
-        ResourceNotFoundException e = assertThrows(
-                ResourceNotFoundException.class, () -> service.buscaPorId(paciente7.getId()));
+        Paciente finalPaciente = paciente7;
 
-                assertTrue(e.getMessage().contains("ID invalido"));
+        ResourceNotFoundException e = assertThrows(
+                ResourceNotFoundException.class, () -> service.buscaPorId(finalPaciente.getId()));
+
+                assertFalse(e.getMessage().contains("Erro ao tentar excluir paciente, o paciente informado não existe"));
     }
 
 }
