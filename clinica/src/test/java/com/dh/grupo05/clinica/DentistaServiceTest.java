@@ -63,4 +63,6 @@ public class DentistaServiceTest {
         Assertions.assertEquals(2, tamanhoLista);
         System.out.println("O tamanho do Array é compatível ao esperado");
         }
+
+
 }
