@@ -1,6 +1,8 @@
 package com.dh.grupo05.clinica;
 
+import com.dh.grupo05.clinica.exception.ResourceNotFoundException;
 import com.dh.grupo05.clinica.model.Dentista;
+import com.dh.grupo05.clinica.model.dto.DentistaDTO;
 import com.dh.grupo05.clinica.service.DentistaService;
 import org.h2.command.dml.Delete;
 import org.junit.jupiter.api.Assertions;
@@ -26,6 +28,8 @@ public class DentistaServiceTest {
     static Dentista dentista;
     static Dentista dentista2;
 
+    static DentistaDTO dentistaDTO;
+
     @BeforeAll
     static void doBefore(){
         dentista = new Dentista();
@@ -38,6 +42,10 @@ public class DentistaServiceTest {
         dentista2.setSobrenome("Silvério");
         dentista2.setMatricula("8674513");
 
+        dentistaDTO = new DentistaDTO();
+
+
+
 
     }
 
@@ -45,7 +53,6 @@ public class DentistaServiceTest {
     void conluindoSalvamento(){
         Dentista dentista1 = new Dentista();
         dentista1 = service.salvar(dentista);
-
         Assertions.assertNotNull(dentista.getId());
         System.out.println("Dentista1 foi salvo com sucesso");
     }
@@ -60,9 +67,30 @@ public class DentistaServiceTest {
 
         int tamanhoLista = service.buscarTodosDentistas().size();
 
-        Assertions.assertEquals(2, tamanhoLista);
+        Assertions.assertEquals(3, tamanhoLista);
         System.out.println("O tamanho do Array é compatível ao esperado");
         }
+
+    @Test
+    void buscarDentistaPorId() throws ResourceNotFoundException {
+        Dentista dentista1 = new Dentista();
+        dentista1 = service.salvar(dentista);
+        DentistaDTO dentistaDTO =  service.buscaPorId(1L);
+        Assertions.assertEquals("Paulo", dentistaDTO.getNome());
+        Assertions.assertEquals("Ferracini", dentistaDTO.getSobrenome());
+    }
+
+    @Test
+    void alterarDentista() throws ResourceNotFoundException {
+        Dentista dentista1 = new Dentista();
+        dentista1 = service.salvar(dentista);
+        dentista.setNome("Marcos");
+        service.modificar(dentista);
+        DentistaDTO dentistaDTO =  service.buscaPorId(1L);
+        Assertions.assertEquals("Marcos", dentistaDTO.getNome());
+        Assertions.assertEquals("Ferracini", dentistaDTO.getSobrenome());
+    }
+
 
 
 }

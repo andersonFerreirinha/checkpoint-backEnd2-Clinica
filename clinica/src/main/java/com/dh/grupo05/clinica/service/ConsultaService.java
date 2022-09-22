@@ -1,5 +1,4 @@
 package com.dh.grupo05.clinica.service;
-
 import com.dh.grupo05.clinica.model.Consulta;
 import com.dh.grupo05.clinica.repository.ConsultaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
