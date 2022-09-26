@@ -52,5 +52,14 @@ public class PacienteController {
         service.excluir(id);
     }
 
+    @GetMapping(path = "/buscaPorCep")
+    public ResponseEntity buscaPorCep(@RequestParam("cep") String cep){
+        List<Paciente> listPaciente = service.buscarPorCep(cep);
+        if(listPaciente.isEmpty()){
+            return new ResponseEntity("Nenhum Pedido Encontrado!!", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(listPaciente,HttpStatus.OK);
+    }
+
 
 }

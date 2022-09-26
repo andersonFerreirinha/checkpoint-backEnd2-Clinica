@@ -55,4 +55,10 @@ public class PacienteService {
         repository.deleteById(id);
     }
 
+    public List<Paciente> buscarPorCep(String cep){
+        return repository.findByEnderecoCep(cep);
+    }
+
+
+
 }

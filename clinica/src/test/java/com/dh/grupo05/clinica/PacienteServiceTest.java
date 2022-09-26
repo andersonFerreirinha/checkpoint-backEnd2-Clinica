@@ -2,6 +2,7 @@ package com.dh.grupo05.clinica;
 
 import com.dh.grupo05.clinica.exception.ResourceNotFoundException;
 import com.dh.grupo05.clinica.model.Consulta;
+import com.dh.grupo05.clinica.model.Endereco;
 import com.dh.grupo05.clinica.model.Paciente;
 import com.dh.grupo05.clinica.service.ConsultaService;
 import com.dh.grupo05.clinica.service.PacienteService;
@@ -30,6 +31,8 @@ public class PacienteServiceTest {
 
     static Paciente pacienteMolde4;
 
+    static Endereco endereco;
+
     @BeforeAll
     static void doBefore() {
         pacienteMolde1 = new Paciente();
@@ -43,6 +46,7 @@ public class PacienteServiceTest {
 
         pacienteMolde4 = new Paciente();
         pacienteMolde4.setNome("Donatella");
+
     }
 
     @Test
@@ -123,5 +127,5 @@ public class PacienteServiceTest {
 
                 assertFalse(e.getMessage().contains("Erro ao tentar excluir paciente, o paciente informado não existe"));
     }
-
 }
+
