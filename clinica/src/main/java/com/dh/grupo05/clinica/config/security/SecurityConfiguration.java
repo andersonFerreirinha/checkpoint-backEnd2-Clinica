@@ -34,9 +34,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                //.antMatchers(HttpMethod.GET, "/dentista").permitAll()//("ADMIN", "USER")
-                .antMatchers(HttpMethod.GET, "/paciente").hasAnyAuthority("USER")
-
+                .antMatchers(HttpMethod.GET, "/consulta").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/consulta").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/consulta").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/endereco").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/endereco").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/endereco").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/dentista").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/dentista").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/dentista").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/paciente").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/paciente").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/paciente").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/paciente").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/consulta").hasAnyAuthority("USER")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(autenticacaoViaTokenFilter, UsernamePasswordAuthenticationFilter.class);
